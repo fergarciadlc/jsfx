@@ -1,0 +1,29 @@
+// This effect generates a base and applies an amplitude modulation
+// the base frequency doesnt chance, so the program calculates f2 for a given f1
+// based on the trigonometric identity 2cos(f1+f2 /2)cos(f1-f2 /2) (FREQ*BEAT)
+
+desc: Tremolo Beat Modulation
+//tags: tremolo, beat, modulation
+//author: Fernando Garcia
+//last modified: 17/10/19
+
+slider1:440<20,24000,1>Tone (Hz)
+slider2:0.5<0,220,0.5>Beat Frequency (Hz)
+
+in_pin:left input
+in_pin:right input
+out_pin:left output
+out_pin:right output
+
+@slider
+  B=2*$pi*slider2/srate;
+  f2= 2*$pi*slider1/srate;
+  f1=2*B + f2;
+  T=(f1+f2)/2;
+@sample
+
+spl0=0.5*cos(tone)*cos(beat);
+spl1=0.5*cos(tone)*cos(beat);
+
+tone=tone+T;
+beat=beat+B;
