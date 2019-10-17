@@ -1,0 +1,20 @@
+// This effect makes a simple tremolo effect by modulationg the amplitud by a simple armonic oscilator
+
+desc: Tremolo Modulation Average
+//tags: tremolo, modulation
+//author: Fernando Garcia
+
+slider1:0.5<0,100,0.5>Frequency (Hz)
+
+in_pin:left input
+in_pin:right input
+out_pin:left output
+out_pin:right output
+
+@slider
+  B=$pi*2*slider1/srate;
+@sample
+
+spl0=spl0*(cos(pos));
+spl1=spl1*(cos(pos));
+pos=pos+B;
